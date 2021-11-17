@@ -1,0 +1,20 @@
+
+1. 
+node seeds/index.js, start index.js, insert seed data into mongodb
+
+2. 
+``
+
+3.
+_id
+
+4.
+...
+
+5. {id}
+deconstructing: const{id}, req.params.id
+
+6.
+send:
+render:
+redirect:
