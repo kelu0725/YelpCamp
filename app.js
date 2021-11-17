@@ -19,13 +19,16 @@ app.get("/", (req, res) => {
   res.render("home");
 });
 
-app.get("/makecampground", async (req, res) => {
-  const camp = new Campground({
-    title: "My Backyard",
-    description: "cheap",
+app.get("/campgrounds", async (req, res) => {
+  const campgrounds = await Campground.find();
+  res.render("campgrounds/index", {
+    campgrounds,
   });
-  await camp.save();
-  res.send(camp);
+});
+
+app.get("/campgrounds/:id", async (req, res) => {
+  const campground = await Campground.findById(req.params.id);
+  res.render("campgrounds/show", { campground });
 });
 
 app.listen(3000, () => {
