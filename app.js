@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const Campground = require("./models/campground");
 const { urlencoded } = require("express");
 const methodOverride = require("method-override");
+const ejsMate = require("ejs-mate");
 
 //Index.js can be called using node seeds/index.js, to seed data
 
@@ -21,6 +22,7 @@ app.set("view engine", "ejs"); //Add view engine
 app.set("views", path.join(__dirname, "views")); //set up views to relative path
 app.use(express.urlencoded({ extended: true })); // use this to parse body
 app.use(methodOverride("_method")); //use this to allow put and delete method
+app.engine("ejs", ejsMate);
 
 //Meaningless homepage
 app.get("/", (req, res) => {
@@ -46,16 +48,19 @@ app.post("/campgrounds", async (req, res) => {
   res.redirect(`/campgrounds/${campground._id}`);
 });
 
+//route to show details page
 app.get("/campgrounds/:id", async (req, res) => {
   const campground = await Campground.findById(req.params.id);
   res.render("campgrounds/show", { campground });
 });
 
+//route to edie page
 app.get("/campgrounds/:id/edit", async (req, res) => {
   const campground = await Campground.findById(req.params.id);
   res.render("campgrounds/edit", { campground });
 });
 
+//send put request for edit
 app.put("/campgrounds/:id", async (req, res) => {
   const { id } = req.params; //get the value of id
   const campground = await Campground.findByIdAndUpdate(id, {
@@ -64,6 +69,7 @@ app.put("/campgrounds/:id", async (req, res) => {
   res.redirect(`/campgrounds/${campground._id}`);
 });
 
+//send delete request
 app.delete("/campgrounds/:id", async (req, res) => {
   const { id } = req.params;
   const campground = await Campground.findByIdAndDelete(id);
