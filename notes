@@ -18,3 +18,8 @@ deconstructing: const{id}, req.params.id
 send:
 render:
 redirect:
+
+
+7.async error handling
+
+8. why need JOI if we have mongodb 

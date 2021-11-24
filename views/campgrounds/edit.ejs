@@ -2,7 +2,12 @@
 <div class="row mb-3">
   <h1 class="text-center">Edit Campground</h1>
   <div class="col-6 offest-6">
-    <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST">
+    <form
+      action="/campgrounds/<%= campground._id %>?_method=PUT"
+      method="POST"
+      novalidate
+      class="validated-form"
+    >
       <div class="mb-3">
         <label for="title form-label"> Title </label>
         <input
@@ -68,3 +73,28 @@
     <a href="/campgrounds/">All Campgrounds</a>
   </div>
 </div>
+<script>
+  (function () {
+    "use strict";
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll(".validated-form"); //change the sample to const
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(function (form) {
+      //change the sample to from
+      form.addEventListener(
+        "submit",
+        function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
+</script>

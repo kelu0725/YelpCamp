@@ -3,7 +3,7 @@
 <div class="row mb-3">
   <h1 class="text-center">Add Campground</h1>
   <div class="col-6 offest-6">
-    <form action="/campgrounds" method="POST">
+    <form action="/campgrounds" method="POST" novalidate class="validated-form">
       <div class="mb-3">
         <label for="title form-label"> Title </label>
         <input
@@ -11,7 +11,10 @@
           type="text"
           id="title"
           name="campground[title]"
+          required
         />
+        <div class="valid-feedback">Looks good</div>
+        <div class="invalid-feedback">Please provide valid title</div>
         <!-- name attribute is the one that get passed from client to server. 
                 So an object campground:{name:xx, location:xx} is passed -->
       </div>
@@ -22,8 +25,12 @@
           type="text"
           id="location"
           name="campground[location]"
+          required
         />
+        <div class="valid-feedback">Looks good</div>
+        <div class="invalid-feedback">Please provide valid location</div>
       </div>
+
       <div class="mb-3">
         <label for="image form-label"> Image URL</label>
         <input
@@ -31,19 +38,23 @@
           type="text"
           id="image"
           name="campground[image]"
+          required
         />
+        <div class="valid-feedback">Looks good</div>
+        <div class="invalid-feedback">Please provide valid image URL</div>
       </div>
       <div class="mb-3">
         <label for="price form-label"> Price </label>
         <div class="input-group">
           <span class="input-group-text" id="basic-addon1">$</span>
           <input
-            type="number"
+            type="text"
             class="form-control"
             aria-label="price"
             aria-describedly="price-control"
             placeholder="0.00"
             name="campground[price]"
+            required
           />
         </div>
       </div>
@@ -54,6 +65,7 @@
           id="description"
           aria-lable="description"
           name="campground[description]"
+          required
         ></textarea>
       </div>
       <div class="mb-3">
@@ -63,3 +75,28 @@
     <a href="/campgrounds/">All Campgrounds</a>
   </div>
 </div>
+<script>
+  (function () {
+    "use strict";
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll(".validated-form"); //change the sample to const
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(function (form) {
+      //change the sample to from
+      form.addEventListener(
+        "submit",
+        function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
+</script>
