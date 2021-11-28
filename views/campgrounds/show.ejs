@@ -24,6 +24,48 @@
   </div>
   <div class="card-footer text-muted">2 days ago</div>
 </div>
+
+<h2>Add a Review</h2>
+<div class="col-6 offest-6">
+  <form
+    action="/campgrounds/<%= campground._id%>/review"
+    method="POST"
+    novalidate
+  >
+    <div class="mb-3">
+      <label for="rating form-label"> Rating </label>
+      <input
+        class="form-range"
+        type="range"
+        id="range"
+        min="1"
+        max="5"
+        name="review[rating]"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="comment form-label"> Comment </label>
+      <textarea
+        class="form-control"
+        id="comment"
+        aria-lable="comment"
+        name="review[comment]"
+        required
+      ></textarea>
+    </div>
+    <div class="mb-3">
+      <button class="btn btn-success">Submit</button>
+    </div>
+  </form>
+  <div class="mb-3">
+    <% for(let review of campground.reviews) {%>
+    <p>Rating: <%= review.rating %></p>
+    <p>Comment: <%= review.comment %></p>
+    <% } %>
+  </div>
+</div>
+
 <div>
   <a href="/campgrounds">All Campgrounds</a>
 </div>

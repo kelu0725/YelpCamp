@@ -1,16 +1,17 @@
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
-const Campground = require("./models/campground");
 const { urlencoded } = require("express");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const catchAsync = require("./utils/catchAsync");
-const expressError = require("./utils/ExpressError");
-const ExpressError = require("./utils/ExpressError");
 const Joi = require("joi");
-const { campgroundSchema } = require("./joiSchemas");
 
+const catchAsync = require("./utils/catchAsync");
+const ExpressError = require("./utils/ExpressError");
+
+const { campgroundSchema, reviewSchema } = require("./joiSchemas");
+const Campground = require("./models/campground");
+const Review = require("./models/review");
 //Index.js can be called using node seeds/index.js, to seed data
 
 //Connect to Mongo DB
@@ -31,6 +32,16 @@ app.engine("ejs", ejsMate);
 
 const validateCampground = (req, res, next) => {
   const { error } = campgroundSchema.validate(req.body);
+  // console.log(error);
+  if (error) {
+    const msg = error.details.map((ele) => ele.message).join(",");
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
+};
+const validateReview = (req, res, next) => {
+  const { error } = reviewSchema.validate(req.body);
   // console.log(error);
   if (error) {
     const msg = error.details.map((ele) => ele.message).join(",");
@@ -75,7 +86,9 @@ app.post(
 app.get(
   "/campgrounds/:id",
   catchAsync(async (req, res) => {
-    const campground = await Campground.findById(req.params.id);
+    const campground = await Campground.findById(req.params.id).populate(
+      "reviews"
+    );
     res.render("campgrounds/show", { campground });
   })
 );
@@ -109,6 +122,20 @@ app.delete(
     const { id } = req.params;
     const campground = await Campground.findByIdAndDelete(id);
     res.redirect("/campgrounds");
+  })
+);
+//add a review
+app.post(
+  "/campgrounds/:id/review",
+  validateReview,
+  catchAsync(async (req, res, next) => {
+    const campground = await Campground.findById(req.params.id);
+    const review = new Review(req.body.review);
+    campground.reviews.push(review);
+    await review.save();
+    await campground.save();
+    console.log(campground);
+    res.redirect(`/campgrounds/${campground._id}`);
   })
 );
 
