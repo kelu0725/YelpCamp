@@ -93,7 +93,7 @@ app.get(
   })
 );
 
-//route to edie page
+//route to edit page
 app.get(
   "/campgrounds/:id/edit",
   catchAsync(async (req, res) => {
@@ -124,7 +124,8 @@ app.delete(
     res.redirect("/campgrounds");
   })
 );
-//add a review
+
+//add a review for a campground
 app.post(
   "/campgrounds/:id/review",
   validateReview,
@@ -134,8 +135,24 @@ app.post(
     campground.reviews.push(review);
     await review.save();
     await campground.save();
-    console.log(campground);
+    // console.log(campground);
     res.redirect(`/campgrounds/${campground._id}`);
+  })
+);
+
+//delete a review for a campground
+app.delete(
+  "/campgrounds/:id/review/:reviewId",
+  catchAsync(async (req, res) => {
+    const { id, reviewId } = req.params;
+    const review = await Review.findByIdAndDelete(reviewId);
+    const campground = await Campground.findByIdAndUpdate(id, {
+      $pull: { reviews: reviewId },
+    });
+
+    console.log(campground.populate("reviews"));
+    console.log(review);
+    res.redirect(`/campgrounds/${id}`);
   })
 );
 
