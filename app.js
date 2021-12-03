@@ -23,12 +23,13 @@ db.once("open", () => {
 //Set up Express App
 const app = express();
 app.set("view engine", "ejs"); //Add view engine
+app.engine("ejs", ejsMate); //???why add ejsMate
 app.set("views", path.join(__dirname, "views")); //set up views to relative path
 app.set("campgroundRoute", path.join(__dirname, "campgroundRoute"));
 app.set("reviewRoute", path.join(__dirname, "reviewRoute"));
 app.use(express.urlencoded({ extended: true })); // use this to parse body
 app.use(methodOverride("_method")); //use this to allow put and delete method
-app.engine("ejs", ejsMate);
+app.use(express.static("public")); //set public to be served
 
 app.use("/campgrounds", campgroundRoute);
 app.use("/campgrounds/:id/review", reviewRoute);
