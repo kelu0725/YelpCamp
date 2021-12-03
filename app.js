@@ -5,6 +5,9 @@ const { urlencoded } = require("express");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const Joi = require("joi");
+const session = require("express-session");
+const flash = require("connect-flash");
+
 const ExpressError = require("./utils/ExpressError");
 
 const campgroundRoute = require("./routes/campgroundRoute");
@@ -29,8 +32,30 @@ app.set("campgroundRoute", path.join(__dirname, "campgroundRoute"));
 app.set("reviewRoute", path.join(__dirname, "reviewRoute"));
 app.use(express.urlencoded({ extended: true })); // use this to parse body
 app.use(methodOverride("_method")); //use this to allow put and delete method
-app.use(express.static("public")); //set public to be served
+app.use(express.static(path.join(__dirname, "public"))); //set public to be served
 
+//Add sessions, need to add it before routes
+const sessionConfig = {
+  secret: "shouldbesecret",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+    HttpOnly: true,
+  },
+};
+app.use(session(sessionConfig));
+
+//add flash
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  next();
+});
+
+//Add routes
 app.use("/campgrounds", campgroundRoute);
 app.use("/campgrounds/:id/review", reviewRoute);
 
