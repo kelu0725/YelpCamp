@@ -27,7 +27,7 @@ router.post(
     campground.reviews.push(review);
     await review.save();
     await campground.save();
-    // console.log(campground);
+    req.flash("success", "Successfully add review!");
     res.redirect(`/campgrounds/${campground._id}`);
   })
 );
@@ -41,6 +41,7 @@ router.delete(
     const campground = await Campground.findByIdAndUpdate(id, {
       $pull: { reviews: reviewId },
     });
+    req.flash("success", "Successfully delete review!");
     res.redirect(`/campgrounds/${id}`);
   })
 );

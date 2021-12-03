@@ -49,9 +49,10 @@ app.use(session(sessionConfig));
 
 //add flash
 app.use(flash());
-
+//a middleware to attach success to local variable, and to display flash message with key success
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
   next();
 });
 
