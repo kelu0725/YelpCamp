@@ -7,11 +7,15 @@ const ejsMate = require("ejs-mate");
 const Joi = require("joi");
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
 
 const ExpressError = require("./utils/ExpressError");
+const User = require("./models/user");
 
 const campgroundRoute = require("./routes/campgroundRoute");
 const reviewRoute = require("./routes/reviewRoute");
+const userRoute = require("./routes/userRoute");
 
 //Index.js can be called using node seeds/index.js, to seed data
 
@@ -47,6 +51,14 @@ const sessionConfig = {
 };
 app.use(session(sessionConfig));
 
+//add passport authentication
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 //add flash
 app.use(flash());
 //a middleware to attach success to local variable, and to display flash message with key success
@@ -57,8 +69,16 @@ app.use((req, res, next) => {
 });
 
 //Add routes
+app.use("/", userRoute);
 app.use("/campgrounds", campgroundRoute);
 app.use("/campgrounds/:id/review", reviewRoute);
+
+// app.get("/fakeUser", async (req, res) => {
+//   const user = new User({ email: "abcd@gmaili.com", username: "a" });
+//   const newUser = await User.register(user, "psw");
+//   console.log(newUser);
+//   res.send(newUser);
+// });
 
 //Meaningless homepage
 app.get("/", (req, res) => {
