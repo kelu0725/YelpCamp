@@ -5,17 +5,7 @@ const ExpressError = require("../utils/ExpressError");
 const { reviewSchema } = require("../joiSchemas");
 const Campground = require("../models/campground");
 const Review = require("../models/review");
-
-const validateReview = (req, res, next) => {
-  const { error } = reviewSchema.validate(req.body);
-  // console.log(error);
-  if (error) {
-    const msg = error.details.map((ele) => ele.message).join(",");
-    throw new ExpressError(msg, 400);
-  } else {
-    next();
-  }
-};
+const { validateReview } = require("../middleware");
 
 //add a review for a campground
 router.post(

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review");
+const User = require("./user");
 
 const CampgroundSchema = new Schema({
   title: String,
@@ -14,6 +15,10 @@ const CampgroundSchema = new Schema({
       ref: "Review",
     },
   ],
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 //mongoose middleware, triggers findOneAndRemove

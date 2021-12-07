@@ -16,7 +16,7 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
 const seedDB = async () => {
   await Campground.deleteMany({});
 
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 20; i++) {
     const random1 = Math.floor(Math.random() * 1000);
     const price1 = Math.floor(Math.random() * 20) + 5;
     const camp = new Campground({
@@ -25,6 +25,7 @@ const seedDB = async () => {
       image: "https://source.unsplash.com/collection/1127092",
       description: "So pretty cute wonderful",
       price: price1,
+      author: "61aeb83def766aa4380cb175",
     });
 
     await camp.save();

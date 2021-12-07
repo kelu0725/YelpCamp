@@ -1,4 +1,5 @@
 <% layout('layouts/boilerplate') %>
+
 <div class="row">
   <div class="col-6">
     <div class="card mb-3">
@@ -9,8 +10,12 @@
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item text-muted"><%= campground.location %></li>
+        <li class="list-group-item">Created by <%= campground.author.username %></li>
         <li class="list-group-item">$<%= campground.price%>/night</li>
       </ul>
+
+      <% if(currentUser && currentUser._id.equals(campground.author._id)) {%> 
+
       <div class="card-body">
         <a
           href="/campgrounds/<%= campground._id %>/edit"
@@ -24,9 +29,14 @@
         >
           <button class="btn btn-danger d-inline">Delete</button>
         </form>
+         </div>
+  <% } %> 
+
+    </div>
       </div>
       <div class="card-footer text-muted">2 days ago</div>
     </div>
+    
   </div>
   <div class="col-6">
     <h2>Add a Review</h2>
