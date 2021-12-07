@@ -18,12 +18,16 @@ router.post(
       const { username, email, password } = req.body;
       const user = new User({ email: email, username: username });
       const registeredUser = await User.register(user, password);
-      //   console.log(registeredUser);
-      req.flash("success", "Successfully Register!");
+      req.login(registeredUser, (err) => {
+        //passport login function requirement
+        if (err) return next(err);
+        req.flash("success", "Successfully Register!");
+        res.redirect("/campgrounds");
+      });
     } catch (e) {
       req.flash("error", e.message);
+      res.redirect("/register");
     }
-    res.redirect("/register");
   })
 );
 
@@ -38,8 +42,9 @@ router.post(
     failureRedirect: "/login",
   }), //middleware function handles failure messages
   (req, res) => {
+    const redirectUrl = req.session.returnTo || "/campgrounds";
     req.flash("success", "Welcome back!");
-    res.redirect("/campgrounds");
+    res.redirect(redirectUrl);
   }
 );
 
