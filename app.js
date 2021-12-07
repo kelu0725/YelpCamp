@@ -61,8 +61,10 @@ passport.deserializeUser(User.deserializeUser());
 
 //add flash
 app.use(flash());
-//a middleware to attach success to local variable, and to display flash message with key success
+
+//a middleware to add variable to local variable, so that we can access these variables
 app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
