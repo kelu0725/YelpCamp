@@ -11,7 +11,7 @@ router.get(
   "/",
   catchAsync(async (req, res) => {
     const campgrounds = await Campground.find();
-    res.render("campgrounds", {
+    res.render("campgrounds/index", {
       campgrounds,
     });
   })

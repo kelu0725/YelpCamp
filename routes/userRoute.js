@@ -32,6 +32,7 @@ router.post(
 );
 
 router.get("/login", (req, res) => {
+  console.log("login");
   res.render("users/login");
 });
 
@@ -42,7 +43,9 @@ router.post(
     failureRedirect: "/login",
   }), //middleware function handles failure messages
   (req, res) => {
+    console.log(req.session);
     const redirectUrl = req.session.returnTo || "/campgrounds";
+
     req.flash("success", "Welcome back!");
     res.redirect(redirectUrl);
   }

@@ -37,40 +37,46 @@
       <div class="card-footer text-muted">2 days ago</div>
     </div>
     
+
+
   </div>
   <div class="col-6">
-    <h2>Add a Review</h2>
-    <form
-      action="/campgrounds/<%= campground._id%>/review"
-      method="POST"
-      novalidate
-    >
-      <div class="mb-3">
-        <label for="rating form-label"> Rating </label>
-        <input
-          class="form-range"
-          type="range"
-          id="range"
-          min="1"
-          max="5"
-          name="review[rating]"
-          required
-        />
-      </div>
-      <div class="mb-3">
-        <label for="comment form-label"> Comment </label>
-        <textarea
-          class="form-control"
-          id="comment"
-          aria-lable="comment"
-          name="review[comment]"
-          required
-        ></textarea>
-      </div>
-      <div class="mb-3">
-        <button class="btn btn-success">Submit</button>
-      </div>
-    </form>
+      <% if(currentUser) {%> 
+
+        <h2>Add a Review</h2>
+        <form
+          action="/campgrounds/<%= campground._id%>/review"
+          method="POST"
+          novalidate
+        >
+          <div class="mb-3">
+            <label for="rating form-label"> Rating </label>
+            <input
+              class="form-range"
+              type="range"
+              id="range"
+              min="1"
+              max="5"
+              name="review[rating]"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="comment form-label"> Comment </label>
+            <textarea
+              class="form-control"
+              id="comment"
+              aria-lable="comment"
+              name="review[comment]"
+              required
+            ></textarea>
+          </div>
+          <div class="mb-3">
+            <button class="btn btn-success">Submit</button>
+          </div>
+        </form>
+      <% } %>   
+
     <div class="mb-3">
       <% for(let review of campground.reviews) {%>
       <div class="card mb-3">
