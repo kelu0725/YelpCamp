@@ -5,11 +5,12 @@ const ExpressError = require("../utils/ExpressError");
 const { reviewSchema } = require("../joiSchemas");
 const Campground = require("../models/campground");
 const Review = require("../models/review");
-const { validateReview } = require("../middleware");
+const { validateReview, isLoggedIn, isReviewAuthor } = require("../middleware");
 
 //add a review for a campground
 router.post(
   "/",
+  isLoggedIn,
   validateReview,
   catchAsync(async (req, res, next) => {
     const campground = await Campground.findById(req.params.id);
@@ -27,6 +28,8 @@ router.post(
 //delete a review for a campground
 router.delete(
   "/:reviewId",
+  isLoggedIn,
+  isReviewAuthor,
   catchAsync(async (req, res) => {
     const { id, reviewId } = req.params;
     const review = await Review.findByIdAndDelete(reviewId);

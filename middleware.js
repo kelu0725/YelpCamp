@@ -46,3 +46,14 @@ module.exports.validateReview = (req, res, next) => {
     next();
   }
 };
+
+module.exports.isReviewAuthor = async (req, res, next) => {
+  const { id, reviewId } = req.params; //get the value of id
+  const campground = await Campground.findById(id);
+  const review = await Review.findById(reviewId);
+  if (!req.user || !req.user._id.equals(review.author)) {
+    req.flash("error", "You don't have permission!");
+    return res.redirect(`/campgrounds/${campground._id}`);
+  }
+  next();
+};
