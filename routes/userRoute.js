@@ -3,57 +3,21 @@ const router = express.Router();
 const User = require("../models/user");
 const passport = require("passport");
 const catchAsync = require("../utils/catchAsync");
+const userController = require("../controllers/userController");
 
-router.get("/register", (req, res) => {
-  res.render("users/register");
-});
+router
+  .get("/register", userController.getRegister)
+  .post("/register", catchAsync(userController.postRegister));
 
-router.post(
-  "/register",
-  catchAsync(async (req, res) => {
-    //Duplicated username error is handled by passport-local-mongoose
-    //catchAsync will only redirect to error handler
-    //Add try catch here to catch the error and flash messages
-    try {
-      const { username, email, password } = req.body;
-      const user = new User({ email: email, username: username });
-      const registeredUser = await User.register(user, password);
-      req.login(registeredUser, (err) => {
-        //passport login function requirement
-        if (err) return next(err);
-        req.flash("success", "Successfully Register!");
-        res.redirect("/campgrounds");
-      });
-    } catch (e) {
-      req.flash("error", e.message);
-      res.redirect("/register");
-    }
-  })
-);
-
-router.get("/login", (req, res) => {
-  console.log("login");
-  res.render("users/login");
-});
-
-router.post(
+router.get("/login", userController.getLogin).post(
   "/login",
   passport.authenticate("local", {
     failureFlash: true,
     failureRedirect: "/login",
-  }), //middleware function handles failure messages
-  (req, res) => {
-    console.log(req.session);
-    const redirectUrl = req.session.returnTo || "/campgrounds";
-    req.flash("success", "Welcome back!");
-    res.redirect(redirectUrl);
-  }
+  }),
+  userController.postLogin //middleware function handles failure messages
 );
 
-router.get("/logout", (req, res) => {
-  req.logout(); //passport function
-  req.flash("success", "You have logged out!");
-  res.redirect("/campgrounds");
-});
+router.get("/logout", userController.getLogout);
 
 module.exports = router;

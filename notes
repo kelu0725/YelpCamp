@@ -4,12 +4,14 @@ node seeds/index.js, start index.js, insert seed data into mongodb
 
 2. 
 ``
+literal
 
 3.
 _id
 
 4.
 ...
+spread operator
 
 5. {id}
 deconstructing: const{id}, req.params.id
