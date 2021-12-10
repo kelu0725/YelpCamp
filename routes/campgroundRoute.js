@@ -13,15 +13,11 @@ router
   .route("/")
   .get(catchAsync(campgroundController.getAllCampgrounds)) //get all campgrounds
   .post(
-    upload.array("campground[image]"),
-    (req, res) => {
-      console.log(req.body, req.files);
-      res.send(req.body);
-    }
     //add new campground
-    // isLoggedIn,
-    // validateCampground,
-    // catchAsync(campgroundController.postNewCampground)
+    isLoggedIn,
+    upload.array("campground[image]"),
+    validateCampground,
+    catchAsync(campgroundController.postNewCampground)
   );
 
 //Create campground:route to new campground page, get the form
