@@ -16,14 +16,24 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
 const seedDB = async () => {
   await Campground.deleteMany({});
 
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 10; i++) {
     const random1 = Math.floor(Math.random() * 1000);
     const price1 = Math.floor(Math.random() * 20) + 5;
     const camp = new Campground({
       location: `${cities[random1].city}, ${cities[random1].state}`,
       title: `${sample(descriptors)} ${sample(places)}`,
-      image: "https://source.unsplash.com/collection/1127092",
-      description: "So pretty cute wonderful",
+      images: [
+        {
+          url: "https://res.cloudinary.com/dwnvpusvo/image/upload/v1639109180/YelpCamp/qkzmqxsbtjpgsfryiknt.png",
+          filename: "YelpCamp/qkzmqxsbtjpgsfryiknt",
+        },
+        {
+          url: "https://res.cloudinary.com/dwnvpusvo/image/upload/v1639107531/YelpCamp/wlqdmgjl0p0xaw9ldev7.jpg",
+          filename: "YelpCamp/wlqdmgjl0p0xaw9ldev7",
+        },
+      ],
+      description:
+        "Fifteen years after his death, a carousel barker is granted permission to return to Earth for one day to make amends to his widow and their daughter..So pretty cute wonderfulA carousel roundabout (British English), hurdy-gurdy (Australian English, esp. SA), or merry-go-round, is a type of amusement ride consisting of a rotating",
       price: price1,
       author: "61aeb83def766aa4380cb175",
     });
