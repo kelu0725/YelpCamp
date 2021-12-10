@@ -39,6 +39,7 @@
             type="number"
             class="form-control"
             name="campground[price]"
+            placeholder="<%= campground.price %> "
             value="<%= campground.price %> "
           />
         </div>
@@ -53,6 +54,7 @@
         >
           <%= campground.description %> </textarea
         >
+        <br />
         <div class="mb-3">
           <label for="image form-label">Select a picture:</label>
           <input
@@ -64,6 +66,22 @@
           />
         </div>
       </div>
+      <% campground.images.forEach((img, i) => { %>
+      <img
+        src="<%= img.thumbnail %> "
+        alt="image-<%= i %>"
+        class="img-thumbnail"
+      />
+      <div class="form-check-inline">
+        <input
+          type="checkbox"
+          name="deleteImages[]"
+          id="image-<%= i %> "
+          value="<%=  img.filename %>"
+        />
+        <label for="image-<%= i %> ">Delete</label>
+      </div>
+      <% }) %>
       <div class="mb-3">
         <button class="btn btn-success">Edit Campground</button>
       </div>
