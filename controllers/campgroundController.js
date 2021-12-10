@@ -42,6 +42,7 @@ module.exports.getEditCampground = async (req, res) => {
 
 module.exports.putEditCampground = async (req, res) => {
   const { id } = req.params; //get the value of id
+
   const campground = await Campground.findByIdAndUpdate(id, {
     ...req.body.campground,
   });
