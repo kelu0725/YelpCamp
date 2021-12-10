@@ -15,8 +15,8 @@ router
   .post(
     //add new campground
     isLoggedIn,
-    upload.array("campground[image]"),
     validateCampground,
+    upload.array("campground[image]"),
     catchAsync(campgroundController.postNewCampground)
   );
 
