@@ -17,7 +17,6 @@ router
     isLoggedIn,
     upload.array("campground[image]"),
     validateCampground,
-
     catchAsync(campgroundController.postNewCampground)
   );
 
@@ -26,22 +25,24 @@ router.get("/new", isLoggedIn, campgroundController.getNewCampground);
 
 //Details Page; route to show details page
 router
-  .get("/:id", catchAsync(campgroundController.getOneCampground)) //show details
+  .route("/:id")
+  .get(catchAsync(campgroundController.getOneCampground)) //show details
   .put(
     //submit/post edit
-    "/:id",
     isLoggedIn,
     isAuthor,
+    upload.array("campground[image]"),
     validateCampground,
     catchAsync(campgroundController.putEditCampground)
-  )
-  .delete(
-    //delete the campground
-    "/:id",
-    isLoggedIn,
-    isAuthor,
-    catchAsync(campgroundController.deleteCampground)
   );
+
+router.delete(
+  //delete the campground
+  "/:id",
+  isLoggedIn,
+  isAuthor,
+  catchAsync(campgroundController.deleteCampground)
+);
 
 //Edit campground
 router.get(

@@ -38,20 +38,6 @@
       </div>
 
       <div class="mb-3">
-        <!-- <label for="image form-label"> Image URL</label>
-        <input
-          class="form-control"
-          type="text"
-          id="image"
-          name="campground[image]"
-          required
-        />
-        <div class="valid-feedback">Looks good</div>
-        <div class="invalid-feedback">Please provide valid image URL</div> -->
-        <label for="Image">Select a picture:</label>
-        <input type="file" id="img" name="campground[image]" multiple />
-      </div>
-      <div class="mb-3">
         <label for="price form-label"> Price </label>
         <div class="input-group">
           <span class="input-group-text" id="basic-addon1">$</span>
@@ -75,6 +61,16 @@
           name="campground[description]"
           required
         ></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="image form-label">Select a picture:</label>
+        <input
+          type="file"
+          class="form-control"
+          id="img"
+          name="campground[image]"
+          multiple
+        />
       </div>
       <div class="mb-3">
         <button class="btn btn-primary">Add Campground</button>

@@ -47,7 +47,7 @@ module.exports.getEditCampground = async (req, res) => {
 
 module.exports.putEditCampground = async (req, res) => {
   const { id } = req.params; //get the value of id
-
+  console.log(id);
   const campground = await Campground.findByIdAndUpdate(id, {
     ...req.body.campground,
   });
@@ -55,6 +55,12 @@ module.exports.putEditCampground = async (req, res) => {
     req.flash("error", "No Campground Found!");
     return res.redirect("/campgrounds");
   }
+  const imgs = req.files.map((f) => ({
+    url: f.path,
+    filename: f.filename,
+  }));
+  campground.images.push(...imgs); //this return an array
+  await campground.save();
   req.flash("success", "Successfully Edit Campground!");
   res.redirect(`/campgrounds/${campground._id}`);
 };

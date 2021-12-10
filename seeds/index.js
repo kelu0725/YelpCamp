@@ -24,12 +24,8 @@ const seedDB = async () => {
       title: `${sample(descriptors)} ${sample(places)}`,
       images: [
         {
-          url: "https://res.cloudinary.com/dwnvpusvo/image/upload/v1639109180/YelpCamp/qkzmqxsbtjpgsfryiknt.png",
-          filename: "YelpCamp/qkzmqxsbtjpgsfryiknt",
-        },
-        {
-          url: "https://res.cloudinary.com/dwnvpusvo/image/upload/v1639107531/YelpCamp/wlqdmgjl0p0xaw9ldev7.jpg",
-          filename: "YelpCamp/wlqdmgjl0p0xaw9ldev7",
+          url: "https://cdn.britannica.com/58/94458-050-0C18D00E/Yosemite-National-Park-California.jpg",
+          filename: "sample1",
         },
       ],
       description:
