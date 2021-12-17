@@ -1,6 +1,11 @@
 <% layout('layouts/boilerplate') %>
+  <link rel="stylesheet" href="/css/starability.css" />
+
+
 
 <div class="row">
+
+<div id='map' style='width: 400px; height: 300px;'></div>
   <div class="col-6">
  
     <div class="card mb-3">
@@ -126,3 +131,11 @@
 <div>
   <a href="/campgrounds">All Campgrounds</a>
 </div>
+
+  <script>
+    const mapToken = '<%-process.env.MAPBOX_TOKEN%>'
+    const coordinatesStr= '<%- JSON.stringify(campground.geometry.coordinates) %>';
+    const coordinates = JSON.parse(coordinatesStr);
+  </script>
+<script src='/js/showMap.js'></script>
+
