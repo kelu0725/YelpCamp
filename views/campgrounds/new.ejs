@@ -1,81 +1,82 @@
 <% layout('layouts/boilerplate') %>
-
-<div class="row mb-3">
-  <h1 class="text-center">Add Campground</h1>
-  <div class="col-6 offest-6">
-    <form
-      action="/campgrounds"
-      method="POST"
-      novalidate
-      class="validated-form"
-      enctype="multipart/form-data"
-    >
-      <div class="mb-3">
-        <label for="title form-label"> Title </label>
-        <input
-          class="form-control"
-          type="text"
-          id="title"
-          name="campground[title]"
-          required
-        />
-        <div class="valid-feedback">Looks good</div>
-        <div class="invalid-feedback">Please provide valid title</div>
-        <!-- name attribute is the one that get passed from client to server. 
-                So an object campground:{name:xx, location:xx} is passed -->
-      </div>
-      <div class="mb-3">
-        <label for="location form-label"> Location </label>
-        <input
-          class="form-control"
-          type="text"
-          id="location"
-          name="campground[location]"
-          required
-        />
-        <div class="valid-feedback">Looks good</div>
-        <div class="invalid-feedback">Please provide valid location</div>
-      </div>
-
-      <div class="mb-3">
-        <label for="price form-label"> Price </label>
-        <div class="input-group">
-          <span class="input-group-text" id="basic-addon1">$</span>
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="row mb-3">
+    <h1 class="text-center">Add Campground</h1>
+    <div class="col-sm-12 col-md-12">
+      <form
+        action="/campgrounds"
+        method="POST"
+        novalidate
+        class="validated-form"
+        enctype="multipart/form-data"
+      >
+        <div class="mb-3">
+          <label for="title form-label"> Title </label>
           <input
-            type="number"
             class="form-control"
-            aria-label="price"
-            aria-describedly="price-control"
-            name="campground[price]"
-            placeholder="10"
+            type="text"
+            id="title"
+            name="campground[title]"
             required
           />
+          <div class="valid-feedback">Looks good</div>
+          <div class="invalid-feedback">Please provide valid title</div>
+          <!-- name attribute is the one that get passed from client to server. 
+                So an object campground:{name:xx, location:xx} is passed -->
         </div>
-      </div>
-      <div class="mb-3">
-        <label for="description form-label"> Description </label>
-        <textarea
-          class="form-control"
-          id="description"
-          aria-lable="description"
-          name="campground[description]"
-          required
-        ></textarea>
-      </div>
-      <div class="mb-3">
-        <label for="image form-label">Select a picture:</label>
-        <input
-          type="file"
-          class="form-control"
-          id="img"
-          name="campground[image]"
-          multiple
-        />
-      </div>
-      <div class="mb-3">
-        <button class="btn btn-primary">Add Campground</button>
-      </div>
-    </form>
-    <a href="/campgrounds/">All Campgrounds</a>
+        <div class="mb-3">
+          <label for="location form-label"> Location </label>
+          <input
+            class="form-control"
+            type="text"
+            id="location"
+            name="campground[location]"
+            required
+          />
+          <div class="valid-feedback">Looks good</div>
+          <div class="invalid-feedback">Please provide valid location</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="price form-label"> Price </label>
+          <div class="input-group">
+            <span class="input-group-text" id="basic-addon1">$</span>
+            <input
+              type="number"
+              class="form-control"
+              aria-label="price"
+              aria-describedly="price-control"
+              name="campground[price]"
+              placeholder="10"
+              required
+            />
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="description form-label"> Description </label>
+          <textarea
+            class="form-control"
+            id="description"
+            aria-lable="description"
+            name="campground[description]"
+            required
+          ></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="image form-label">Select a picture:</label>
+          <input
+            type="file"
+            class="form-control"
+            id="img"
+            name="campground[image]"
+            multiple
+          />
+        </div>
+        <div class="mb-3">
+          <button class="btn btn-primary">Add Campground</button>
+        </div>
+      </form>
+      <a href="/campgrounds/">All Campgrounds</a>
+    </div>
   </div>
 </div>
