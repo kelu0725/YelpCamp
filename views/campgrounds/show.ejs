@@ -133,9 +133,8 @@
 </div>
 
   <script>
-    const mapToken = '<%-process.env.MAPBOX_TOKEN%>'
-    const coordinatesStr= '<%- JSON.stringify(campground.geometry.coordinates) %>';
-    const coordinates = JSON.parse(coordinatesStr);
+    const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+    const campground = <%- JSON.stringify(campground) %>
   </script>
 <script src='/js/showMap.js'></script>
 

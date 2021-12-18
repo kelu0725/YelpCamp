@@ -16,12 +16,16 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
 const seedDB = async () => {
   await Campground.deleteMany({});
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 50; i++) {
     const random1 = Math.floor(Math.random() * 1000);
     const price1 = Math.floor(Math.random() * 20) + 5;
     const camp = new Campground({
       location: `${cities[random1].city}, ${cities[random1].state}`,
       title: `${sample(descriptors)} ${sample(places)}`,
+      geometry: {
+        type: "Point",
+        coordinates: [cities[random1].longitude, cities[random1].latitude],
+      },
       images: [
         {
           url: "https://cdn.britannica.com/58/94458-050-0C18D00E/Yosemite-National-Park-California.jpg",
