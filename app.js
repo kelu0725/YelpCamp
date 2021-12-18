@@ -73,7 +73,10 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   next();
 });
-
+//Welcome homepage
+app.get("/index", (req, res) => {
+  res.render("campgrounds/home");
+});
 //Add routes
 app.use("/", userRoute);
 app.use("/campgrounds", campgroundRoute);
@@ -85,11 +88,6 @@ app.use("/campgrounds/:id/review", reviewRoute);
 //   console.log(newUser);
 //   res.send(newUser);
 // });
-
-//Meaningless homepage
-app.get("/", (req, res) => {
-  res.render("home");
-});
 
 //if above routes do no resolve
 app.all("*", (req, res, next) => {
