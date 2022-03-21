@@ -6,3 +6,9 @@ To run locally:
 3. Create .env file, to include credentials for cloudinary and mapbox
 4. Go to where app.js is located, run:
     nodemon app.js
+
+
+
+To run in cloud:
+1. Use mongodb atlas to run mongo in cloud
+

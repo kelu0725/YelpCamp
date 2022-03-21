@@ -20,16 +20,19 @@ const User = require("./models/user");
 const campgroundRoute = require("./routes/campgroundRoute");
 const reviewRoute = require("./routes/reviewRoute");
 const userRoute = require("./routes/userRoute");
+const dbURL = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
 
+const MongoStore = require('connect-mongo');
 //Index.js can be called using node seeds/index.js, to seed data
 
-//Connect to Mongo DB
-mongoose.connect("mongodb://localhost:27017/yelp-camp");
+mongoose.connect(dbURL);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
 db.once("open", () => {
   console.log("Database connected");
 });
+
+
 
 //Set up Express App
 const app = express();
@@ -42,9 +45,26 @@ app.use(express.urlencoded({ extended: true })); // use this to parse body
 app.use(methodOverride("_method")); //use this to allow put and delete method
 app.use(express.static(path.join(__dirname, "public"))); //set public to be served
 
+
+//store session into mongo db, mongo-session changes recently
+//https://github.com/jdesboeufs/connect-mongo/blob/master/MIGRATION_V4.md
+
+const secret = process.env.SECRET || 'secret';
+const mongoStore = MongoStore.create({
+  mongoUrl: dbURL,
+  secret,
+  touchAfter: 24 * 3600,
+})
+
+mongoStore.on('error', function(e){
+  console.log(e)
+})
+
+
 //Add sessions, need to add it before routes
 const sessionConfig = {
-  secret: "shouldbesecret",
+  mongoStore,
+  secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
