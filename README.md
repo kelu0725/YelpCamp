@@ -12,3 +12,13 @@ To run locally:
 To run in cloud:
 1. Use mongodb atlas to run mongo in cloud
 
+
+To deploy in Heroku
+1. Create account in heroku
+2. Go to the dir, run below command
+    - Install Heroku CLI: homebrew command
+    - heroku login
+    - heroku create
+    - Update environment variable, then git add.  ; git commit; git push && git push heroku
+    - heroku logs --tail: to check logs
+    - Fix heroku error: add start to package.json; change port to env port
